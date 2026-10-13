@@ -1,0 +1,20 @@
+{
+  "id": "warframe-api",
+  "purpose": "Private read-only API pilot with synthetic fixtures",
+  "image": "fmartinezgodoy/warframe-market-api:pilot-source",
+  "port": 6002,
+  "repo": "https://github.com/fmartinezgodoy/warframe-market-api",
+  "env": {
+    "HTTP_HOST": "0.0.0.0",
+    "HTTP_PORT": "6002",
+    "DATA_SOURCE": "fixtures"
+  },
+  "routes": [],
+  "volumes": [],
+  "egress_cidrs": [],
+  "uid": 10001,
+  "resources": {
+    "cpu_m": 250,
+    "memory_mi": 256
+  }
+}

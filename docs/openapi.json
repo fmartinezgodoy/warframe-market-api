@@ -1,0 +1,537 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Warframe Market API",
+    "version": "1.0.0",
+    "description": "Read-only wrapper. All examples are synthetic. No public runtime is configured."
+  },
+  "paths": {
+    "/search": {
+      "get": {
+        "operationId": "searchCatalog",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "description": "Clamped to 1\u201350."
+            }
+          },
+          {
+            "name": "rank",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "maxed"
+              ],
+              "default": "maxed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Search"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{slug}": {
+      "get": {
+        "operationId": "getOrders",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9_-]{1,200}$"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sell",
+                "buy"
+              ]
+            }
+          },
+          {
+            "name": "rank",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "platform",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pc",
+                "ps4",
+                "xb1",
+                "swi",
+                "xbox",
+                "switch",
+                "mobile"
+              ]
+            }
+          },
+          {
+            "name": "crossplay",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Orders"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readyz": {
+      "get": {
+        "operationId": "readyz",
+        "responses": {
+          "200": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/livez": {
+      "get": {
+        "operationId": "livez",
+        "responses": {
+          "200": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "ok"
+                  ],
+                  "properties": {
+                    "ok": {
+                      "const": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "required": [
+          "slug",
+          "nameEn",
+          "nameEs",
+          "tags",
+          "maxRank",
+          "rank"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "nameEn": {
+            "type": "string"
+          },
+          "nameEs": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "maxRank": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "rank": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": [
+          "ingameName",
+          "reputation",
+          "platform",
+          "crossplay"
+        ],
+        "properties": {
+          "ingameName": {
+            "type": "string"
+          },
+          "reputation": {
+            "type": "number"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "crossplay": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "required": [
+          "type",
+          "platinum",
+          "quantity",
+          "user"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "sell",
+              "buy"
+            ]
+          },
+          "platinum": {
+            "type": "number",
+            "minimum": 0
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "Search": {
+        "type": "object",
+        "required": [
+          "query",
+          "rank",
+          "count",
+          "results"
+        ],
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "rank": {
+            "enum": [
+              "0",
+              "maxed"
+            ]
+          },
+          "count": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          }
+        }
+      },
+      "Orders": {
+        "type": "object",
+        "required": [
+          "slug",
+          "count",
+          "cached",
+          "filters",
+          "orders"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "cached": {
+            "type": "boolean"
+          },
+          "filters": {
+            "type": "object",
+            "required": [
+              "type",
+              "rank",
+              "platform",
+              "crossplay"
+            ],
+            "properties": {
+              "type": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "rank": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "platform": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "crossplay": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Order"
+            }
+          }
+        }
+      },
+      "Health": {
+        "type": "object",
+        "required": [
+          "ok",
+          "indexReady"
+        ],
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "indexReady": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

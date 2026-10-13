@@ -1,0 +1,11 @@
+{
+  "instance": "warframe-lab",
+  "base_domain": "apps.example.test",
+  "backend": "fake",
+  "state_dir": "../../.local/imageharbor",
+  "routing_enabled": false,
+  "require_digest": false,
+  "log_safe_apps": [
+    "warframe-api"
+  ]
+}
